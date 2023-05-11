@@ -1,0 +1,25 @@
+.logo {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  padding: 20px 80px;
+  margin: 0;
+}
+
+.logo>li {
+  list-style-type: none;
+}
+
+.logo>li>a>img {
+  width: 45px;
+  margin-right: 8px;
+}
+
+.logo>li>a {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}

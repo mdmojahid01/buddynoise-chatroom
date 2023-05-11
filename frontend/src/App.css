@@ -1,0 +1,29 @@
+:root {
+  --background-primary: #121212;
+  --background-secondary: #1D1D1D;
+  --background-primary-2: #181629;
+  --background-secondary-2: #25223f;
+  --text-primary: white;
+  --text-secondary: #c4c5c5;
+  --blue: #0077FF;
+  --indigo: #5453e0;
+  --placeholder: #454545;
+  --input-bg: #262626;
+  --success: #20BD5F;
+  --danger: #F44336;
+  --pink: #E91E63;
+  --hr-color: #323232;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

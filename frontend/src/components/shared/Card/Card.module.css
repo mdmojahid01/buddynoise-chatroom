@@ -1,0 +1,25 @@
+.cardContainer {
+  min-height: 400px;
+  width: 650px;
+  background-color: var(--background-secondary);
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.cardHeading {
+  padding: 10px 0px;
+}
+
+.cardHeading>span {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.cardHeading>img {
+  width: 32px;
+  margin-right: 10px;
+}

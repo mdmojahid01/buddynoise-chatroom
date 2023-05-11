@@ -1,0 +1,81 @@
+.registerContainer {
+  height: calc(100vh - 110px);
+  flex-direction: column;
+  gap: 16px;
+}
+
+.registerType {
+  width: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.registerType>button {
+  display: inline-flex;
+  background-color: var(--background-secondary);
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  font-size: 32px;
+  color: var(--text-primary);
+  transition: all .3s;
+}
+
+.active {
+  background-color: var(--blue) !important;
+}
+
+/* ================= Mobile Container Style ================ */
+.inputBox {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+}
+
+.inputBox::placeholder {
+  color: var(--placeholder);
+
+}
+
+.inputBox:focus {
+  outline: none;
+}
+
+.inputBox:not(:placeholder-shown) {
+  box-shadow: 0px 0px 3px var(--blue);
+}
+
+.p {
+  text-align: center;
+  width: 80%;
+  font-size: 1em;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  margin: 10px 0px;
+}
+
+/* =========== StepOtP ============= */
+.resendBtn {
+  background-color: transparent;
+  border: none;
+  color: var(--blue);
+}
+
+.resendBtn:hover {
+  font-weight: 600;
+}
+
+/* ============== StepAvatar =========== */
+.profileImage {
+  background-color: var(--blue);
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  padding: 4px;
+  object-fit: cover;
+}
