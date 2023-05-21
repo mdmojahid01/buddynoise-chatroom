@@ -6,7 +6,7 @@ import Mobile from "./Mobile";
 import Email from "./Email";
 
 function StepMobileEmail({ onNext }) {
-  const [registerMode, setRegisterMode] = useState("M");
+  const [registerMode, setRegisterMode] = useState("E");
   const switchRegisterMode = (mode) => {
     setRegisterMode(mode);
   };
@@ -17,16 +17,6 @@ function StepMobileEmail({ onNext }) {
         <div className={`${rStyle.registerType}`}>
           <button
             onClick={() => {
-              switchRegisterMode("M");
-            }}
-            className={`flex-center ${
-              registerMode === "M" ? `${rStyle.active}` : ""
-            }`}
-          >
-            <FiSmartphone />
-          </button>
-          <button
-            onClick={() => {
               switchRegisterMode("E");
             }}
             className={`flex-center ${
@@ -34,6 +24,16 @@ function StepMobileEmail({ onNext }) {
             }`}
           >
             <MdOutlineEmail />
+          </button>
+          <button
+            onClick={() => {
+              switchRegisterMode("M");
+            }}
+            className={`flex-center ${
+              registerMode === "M" ? `${rStyle.active}` : ""
+            }`}
+          >
+            <FiSmartphone />
           </button>
         </div>
         {/* ---------------------------- */}

@@ -2,6 +2,8 @@ const hashServices = require("../services/hash-service");
 const otpServices = require("../services/otp-service");
 const userService = require("../services/user-service");
 const tokenServices = require("../services/token-service");
+const UserDto = require("../dtos/user-dto");
+const tokenService = require("../services/token-service");
 
 class AuthController {
   // ============== Method to send OTP ============
@@ -11,8 +13,8 @@ class AuthController {
       res.status(404).json({
         message: "Phone feild is required!",
       });
+      return;
     }
-
     const otp = await otpServices.generateOtp();
     // ====== Below variable is used 2 min for expiry time limit to verify otp =====
 
@@ -25,10 +27,11 @@ class AuthController {
     const hash = hashServices.hashOtp(data);
 
     try {
-      await otpServices.sendBySms(otp, phone);
+      // await otpServices.sendBySms(otp, phone);
       return res.json({
         hash: `${hash}.${expires}`,
         phone,
+        otp,
       });
     } catch (err) {
       console.log(err);
@@ -77,14 +80,99 @@ class AuthController {
       _id: user._id,
       activated: false,
     });
+    // converting userdata to data transfer object(dto)
+    const userdto = new UserDto(user);
 
-    res.cookie("refreshtoken", refreshToken, {
+    // ==== Store token in db
+    await tokenServices.storeRefreshToken(refreshToken, user._id);
+    res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
     });
-    res
-      .status(200)
-      .json({ accessToken, message: "OTP verified successfully!" });
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      httpOnly: true,
+    });
+
+    res.status(200).json({
+      user: userdto,
+      auth: true,
+      message: "OTP verified successfully!",
+    });
+  }
+  // ==================== Rfresh Token =================================
+  async refresh(req, res) {
+    // get refresh token from cookies
+    const { refreshToken: refreshTokenFromCookie } = req.cookies;
+
+    // check if token is valid
+    let userData;
+    try {
+      userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
+
+      if (!userData) {
+        throw new Error();
+      }
+    } catch (err) {
+      return res.status(401).json({ message: "Invalid Token" });
+    }
+    // check if token is in db
+    try {
+      const token = await tokenService.findRefreshToken(
+        userData._id,
+        refreshTokenFromCookie
+      );
+
+      if (!token) {
+        return res.status(401).json({ message: "Invalid Token" });
+      }
+    } catch (err) {
+      return res.status(500).json({ message: "Internal error" });
+    }
+    // check if valid user from refresh token
+    const user = await userService.findUser({ _id: userData._id });
+    // console.log(user);
+    if (!user) {
+      return res.status(404).json({ message: "No user found" });
+    }
+    // generate new tokens
+    const { refreshToken, accessToken } = tokenService.generateToken({
+      _id: userData._id,
+    });
+
+    // update refresh token
+    try {
+      await tokenService.updateRefreshToken(userData._id, refreshToken);
+    } catch (err) {
+      res.status(500).json({ message: "Internal error" });
+    }
+
+    // put in cookie
+    res.cookie("accessToken", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      httpOnly: true,
+    });
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      httpOnly: true,
+    });
+    // response
+    const userdto = new UserDto(user);
+    res.status(200).json({
+      user: userdto,
+      auth: true,
+    });
+  }
+  async logout(req, res) {
+    const { refreshToken } = req.cookies;
+
+    // delete refresh token from db
+    tokenService.removeToken(refreshToken);
+
+    // delete cookies
+    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken");
+    res.json({ user: null, auth: false });
   }
 }
 

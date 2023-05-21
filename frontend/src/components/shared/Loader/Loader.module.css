@@ -1,0 +1,32 @@
+.loaderContainer {
+  height: calc(100vh - 110px);
+
+}
+
+.message {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loaderSpin {
+  margin-top: 70px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  border: 4px dotted transparent;
+  border-left-color: white;
+  border-bottom-color: white;
+  border-right-color: white;
+}

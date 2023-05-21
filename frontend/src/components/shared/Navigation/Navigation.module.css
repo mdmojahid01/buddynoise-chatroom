@@ -2,8 +2,10 @@
   height: 110px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 20px 80px;
   margin: 0;
+
 }
 
 .logo>li {
@@ -22,4 +24,42 @@
   font-weight: 600;
   display: flex;
   align-items: center;
+}
+
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.navRight>a>img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 3px solid var(--blue);
+  background-color: var(--blue);
+}
+
+.navRight>button {
+  background-color: transparent;
+  color: var(--blue);
+  font-size: 36px;
+  border: none;
+  transition: all 0.3s;
+  width: fit-content;
+  padding: 0;
+  margin: 0;
+  height: fit-content;
+
+}
+
+.navRight>h4 {
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.navRight>button:hover {
+  transform: scale(1.2);
 }

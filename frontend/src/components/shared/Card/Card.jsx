@@ -4,8 +4,10 @@ function Card({ heading, icon, alt, children }) {
   return (
     <div className={`${CardStyle.cardContainer}`}>
       <div className={`${CardStyle.cardHeading} flex-center`}>
-        <img src={process.env.PUBLIC_URL + `./images/${icon}`} alt={alt} />
-        <span>{heading}</span>
+        {icon && (
+          <img src={process.env.PUBLIC_URL + `./images/${icon}`} alt={alt} />
+        )}
+        {heading && <span>{heading}</span>}
       </div>
       {children}
     </div>
