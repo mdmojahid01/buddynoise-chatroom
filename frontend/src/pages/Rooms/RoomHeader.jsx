@@ -1,9 +1,9 @@
 import React from "react";
-import style from "./Room.module.css";
+import style from "./Rooms.module.css";
 import { ImSearch } from "react-icons/im";
 import { BiArrowBack, BiStation } from "react-icons/bi";
 
-function RoomHeader({ openModel }) {
+function RoomHeader({ setShowModel }) {
   // =======================================
   return (
     <>
@@ -18,7 +18,9 @@ function RoomHeader({ openModel }) {
         </div>
         <div className={`${style.roomheadright}`}>
           <button
-            onClick={openModel}
+            onClick={() => {
+              setShowModel(true);
+            }}
             className={`${style.startARoomBtn} flex-center`}
           >
             {" "}

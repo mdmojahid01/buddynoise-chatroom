@@ -6,7 +6,7 @@ import { setAvatar } from "../../app/activateSlice";
 import { useEffect, useState } from "react";
 import { activateUser } from "../../http/index";
 import { setAuth } from "../../app/authSlice";
-import Loading from "../../components/shared/Loader/Loader";
+import Loader from "../../components/shared/Loader/Loader";
 import { toast } from "react-toastify";
 
 function StepAvatar({ onNext }) {
@@ -53,7 +53,7 @@ function StepAvatar({ onNext }) {
   }, []);
   // ====================================================================
   if (loading) {
-    return <Loading message="Activation in progress..." />;
+    return <Loader message="Activation in progress..." />;
   }
   return (
     <div className={`${rStyle.registerContainer} flex-center`}>

@@ -35,11 +35,15 @@ function Navigation() {
         {isAuth && user && (
           <div className={`${NavStyle.navRight}`}>
             {user.name && <h4 title="username">{user.name}</h4>}
-            {user.avatar && (
+            
               <Link to="/">
-                <img src={user.avatar} alt="avatar" title="avatar" />
+                <img
+                  src={user.avatar ? user.avatar : "/images/profile_pic.jpg"}
+                  alt="avatar"
+                  title="avatar"
+                />
               </Link>
-            )}
+            
             <button
               title="logout"
               className="flex-center"

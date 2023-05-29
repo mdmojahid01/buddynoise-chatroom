@@ -46,6 +46,10 @@ function App() {
       path: "/room",
       element: <ProtectedRoute path="/room" isAuth={isAuth} user={user} />,
     },
+    {
+      path: "/room/:id",
+      element: <ProtectedRoute path="/room/:id" isAuth={isAuth} user={user} />,
+    },
   ]);
   return loading ? (
     <Loader message="Loading, Please wait..." />
