@@ -19,7 +19,7 @@
 
 .innerModelWrapper>button {
   border: none;
-  outline: none;
+  /* outline: none; */
   background-color: transparent;
   color: white;
   position: absolute;
@@ -65,7 +65,7 @@
   height: 100%;
   padding: 8px 16px;
   border: none;
-  outline: none;
+  /* outline: none; */
   color: white;
   font-size: 18px;
   font-weight: 600;
@@ -92,7 +92,7 @@
 
 .roomTypeWrapper>button {
   border: none;
-  outline: none;
+  /* outline: none; */
   background-color: transparent;
   color: white;
   border-radius: 8px;
@@ -134,7 +134,7 @@
   background-color: var(--success);
   border-radius: 22px;
   border: none;
-  outline: none;
+  /* outline: none; */
   padding: 8px 25px;
   color: white;
   font-size: 18px;

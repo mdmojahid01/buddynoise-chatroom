@@ -18,6 +18,8 @@
     "jimp": "^0.22.8",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.0",
+    "nodemailer": "^6.9.3",
+    "socket.io": "^4.6.1",
     "twilio": "^4.11.0"
   },
   "devDependencies": {

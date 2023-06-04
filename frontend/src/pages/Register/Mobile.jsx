@@ -31,7 +31,6 @@ function Mobile({ onNext }) {
           },
           t
         );
-        // const { data } = await sendOtp({ phone: phoneNumber });
         dispatch(setOtp({ phone: data.phone, hash: data.hash }));
         onNext();
       } catch (err) {

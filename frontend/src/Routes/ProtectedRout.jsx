@@ -5,14 +5,6 @@ import Room from "../pages/Room/Room";
 
 function ProtectedRoute({ isAuth, user, path }) {
   if (isAuth && user.activated) {
-    // if (path === "/room/:id") {
-    //   return (
-    //     <>
-    //       <Navigation />
-    //       <Room />
-    //     </>
-    //   );
-    // }
     return (
       <>
         <Navigation />

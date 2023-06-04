@@ -9,7 +9,6 @@ function RoomHeader({ setShowModel }) {
     <>
       <div className={`${style.roomHeader}`}>
         <div className={`${style.roomheadleft}`}>
-          <BiArrowBack className={`${style.backIcon}`} />
           <span className={`${style.text}`}>All voice rooms</span>
           <div className={`${style.searchIcon}`}>
             <ImSearch />
