@@ -29,14 +29,16 @@ function StepOtp({ onNext }) {
     // console.log(otp);
     try {
       const { data } = await toast.promise(
-        sendOtp({ phone: otp.phone }),
+        sendOtp({ phone: otp.phone, email: otp.email }),
         {
           pending: "sending...",
           success: "OTP sent!",
         },
         t
       );
-      dispatch(setOtp({ phone: data.phone, hash: data.hash }));
+      dispatch(
+        setOtp({ phone: data.phone, email: data.email, hash: data.hash })
+      );
     } catch (err) {
       toast.error("Failed try again...", t);
       console.log(err);
@@ -47,7 +49,7 @@ function StepOtp({ onNext }) {
     if (!otpInput) {
       toast.error("Please enter OTP", t);
       return;
-    } else if (!otp.phone || !otp.hash) {
+    } else if (!otp.hash || (!otp.phone && !otp.email)) {
       toast.error("try again...", t);
       return;
     }
@@ -57,6 +59,7 @@ function StepOtp({ onNext }) {
           otp: otpInput,
           phone: otp.phone,
           hash: otp.hash,
+          email: otp.email,
         }),
         {
           pending: "Verifing...",
@@ -66,7 +69,6 @@ function StepOtp({ onNext }) {
         t
       );
       dispatch(setAuth(data));
-      // onNext();
     } catch (err) {
       console.log(err.message);
     }

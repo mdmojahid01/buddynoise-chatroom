@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from "./AddRoomModel.module.css";
 import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
@@ -16,8 +16,9 @@ function AddRoomModel({ setShowModel }) {
   const [lengthOfTopic, setLengthOfTopic] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const updateRoomType = (val) => {
+  const updateRoomType = (e, val) => {
     setRoomType((old) => val);
+    e.preventDefault();
   };
 
   let flag = true;
@@ -56,6 +57,12 @@ function AddRoomModel({ setShowModel }) {
       }
     }
   };
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, []);
 
   // =============================================
   return (
@@ -79,8 +86,8 @@ function AddRoomModel({ setShowModel }) {
             <h3>Room Type</h3>
             <div className={`${style.roomTypeWrapper}`}>
               <button
-                onClick={() => {
-                  updateRoomType("open");
+                onClick={(e) => {
+                  updateRoomType(e, "open");
                 }}
                 className={`${roomType === "open" ? style.activeRoomType : ""}`}
               >
@@ -88,8 +95,8 @@ function AddRoomModel({ setShowModel }) {
                 <span>Open</span>
               </button>
               <button
-                onClick={() => {
-                  updateRoomType("social");
+                onClick={(e) => {
+                  updateRoomType(e, "social");
                 }}
                 className={`${
                   roomType === "social" ? style.activeRoomType : ""
@@ -99,8 +106,8 @@ function AddRoomModel({ setShowModel }) {
                 <span>Social</span>
               </button>
               <button
-                onClick={() => {
-                  updateRoomType("private");
+                onClick={(e) => {
+                  updateRoomType(e, "private");
                 }}
                 className={`${
                   roomType === "private" ? style.activeRoomType : ""
@@ -117,7 +124,7 @@ function AddRoomModel({ setShowModel }) {
               {roomType === "private" && "Start a room, open to private people"}
             </h3>
             <button
-              onClick={createRoom}
+              onClick={handleSubmit}
               className={`${style.startARoomBtn} flex-center`}
             >
               <img src="/images/celebrate.png" alt="celebrate" />

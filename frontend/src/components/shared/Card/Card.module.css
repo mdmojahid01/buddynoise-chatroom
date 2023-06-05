@@ -23,3 +23,63 @@
   width: 32px;
   margin-right: 10px;
 }
+
+/*************** Responsive CSS ***************/
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+  .cardContainer {
+    width: calc(100% - 60px);
+    padding: 14px;
+    gap: 10px;
+    min-height: 300px;
+  }
+
+  .cardHeading {
+    padding: 10px 0px;
+  }
+
+  .cardHeading>span {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .cardHeading>img {
+    width: 24px;
+    margin-right: 6px;
+  }
+}
+
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .cardContainer {
+    width: calc(100% - 60px);
+    padding: 14px;
+    gap: 10px;
+    min-height: 300px;
+  }
+
+  .cardHeading {
+    padding: 10px 0px;
+  }
+
+  .cardHeading>span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .cardHeading>img {
+    width: 24px;
+    margin-right: 6px;
+  }
+}
+
+
+/* Medium devices (tablets, less than 992px) */
+/* @media (max-width: 991.98px) {} */
+
+/* Large devices (desktops, less than 1200px) */
+/* @media (max-width: 1199.98px) {} */
+
+/* X-Large devices (large desktops, less than 1400px) */
+/* @media (max-width: 1399.98px) {} */

@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./Rooms.module.css";
 import { ImSearch } from "react-icons/im";
-import { BiArrowBack, BiStation } from "react-icons/bi";
+import { BiStation } from "react-icons/bi";
 
 function RoomHeader({ setShowModel }) {
   // =======================================

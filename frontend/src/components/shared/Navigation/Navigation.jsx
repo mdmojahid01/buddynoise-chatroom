@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import NavStyle from "./Navigation.module.css";
 import { logout } from "../../../http";
@@ -5,10 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuth } from "../../../app/authSlice";
 import { ToastContainer } from "react-toastify";
 import { RiLogoutCircleRFill } from "react-icons/ri";
+import ProfilePopup from "../ProfilePopup/ProfilePopup";
 
 function Navigation() {
   const dispatch = useDispatch();
   const { isAuth, user } = useSelector((state) => state.auth);
+  const [show, setShow] = useState(false);
+
   const handleLogout = async () => {
     try {
       const { data } = await logout();
@@ -17,7 +21,6 @@ function Navigation() {
       console.log(err);
     }
   };
-  // style={{ backgroundColor: "pink" }}
   return (
     <nav>
       <ToastContainer pauseOnFocusLoss={false} />
@@ -31,28 +34,33 @@ function Navigation() {
             BuddyNoise
           </Link>
         </li>
-
         {isAuth && user && (
           <div className={`${NavStyle.navRight}`}>
             {user.name && <h4 title="username">{user.name}</h4>}
-            
-              <Link to="/">
-                <img
-                  src={user.avatar ? user.avatar : "/images/profile_pic.jpg"}
-                  alt="avatar"
-                  title="avatar"
-                />
-              </Link>
-            
+
+            <button
+              onClick={() => {
+                setShow((prev) => !prev);
+              }}
+              className={NavStyle.profileBtn}
+            >
+              <img
+                src={user.avatar ? user.avatar : "/images/profile_pic.jpg"}
+                alt="avatar"
+                title="avatar"
+              />
+            </button>
+
             <button
               title="logout"
-              className="flex-center"
+              className={`${NavStyle.logoutBtn}  flex-center`}
               onClick={handleLogout}
             >
               <RiLogoutCircleRFill />
             </button>
           </div>
         )}
+        {show && <ProfilePopup setShow={setShow} />}
       </ul>
     </nav>
   );

@@ -8,42 +8,62 @@ const tokenService = require("../services/token-service");
 class AuthController {
   // ============== Method to send OTP ============
   async sendOtp(req, res) {
-    const { phone } = req.body;
-    if (!phone) {
+    const { phone, email } = req.body;
+    // console.log(email, phone);
+    if (!email && !phone) {
       res.status(404).json({
-        message: "Phone feild is required!",
+        message: "Input feild is required!",
       });
       return;
     }
+
     const otp = await otpServices.generateOtp();
     // ====== Below variable is used 2 min for expiry time limit to verify otp =====
-
     // const ttl = 1000 * 60 *5; // 5 min expiration of OTP in production
-    const ttl = 1000 * 60 * 60 * 24 * 30;
-
+    const ttl = 1000 * 60 * 5;
     const expires = Date.now() + ttl;
-    const data = `${phone}.${otp}.${expires}`;
-    // ===== Hashing the data by using crypto module to verify otp on server ======
-    const hash = hashServices.hashOtp(data);
 
-    try {
-      // await otpServices.sendBySms(otp, phone);
-      return res.json({
-        hash: `${hash}.${expires}`,
-        phone,
-        otp,
-      });
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ message: "message sending failed!" });
-      return;
+    if (phone) {
+      const data = `${phone}.${otp}.${expires}`;
+      // ===== Hashing the data by using crypto module to verify otp on server ======
+      const hash = hashServices.hashOtp(data);
+      try {
+        // await otpServices.sendBySms(otp, phone);
+        return res.json({
+          hash: `${hash}.${expires}`,
+          phone,
+          email: null,
+          otp,
+        });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "message sending failed!" });
+        return;
+      }
+    }
+    if (email) {
+      const data = `${email}.${otp}.${expires}`;
+      // ===== Hashing the data by using crypto module to verify otp on server ======
+      const hash = hashServices.hashOtp(data);
+      try {
+        await otpServices.sendByEmail(otp, email);
+        return res.json({
+          hash: `${hash}.${expires}`,
+          email,
+          phone: null,
+        });
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "message sending failed!" });
+        return;
+      }
     }
   }
 
   // =========== Method to verify OTP =========
   async verifyOtp(req, res) {
-    const { otp, hash, phone } = req.body;
-    if (!otp || !hash || !phone) {
+    const { otp, hash, phone, email } = req.body;
+    if (!otp || !hash || (!phone && !email)) {
       res.status(404).json({ message: "All Fields are required!" });
       return;
     }
@@ -54,25 +74,44 @@ class AuthController {
       return;
     }
 
-    const data = `${phone}.${otp}.${expires}`;
-
-    const isValid = otpServices.verifyOtp(hashedOtp, data);
-
-    if (!isValid) {
-      res.status(400).json({ message: "Invalid OTP" });
-      return;
-    }
-    // =============================
     let user;
-    try {
-      user = await userService.findUser({ phone });
-      if (!user) {
-        user = await userService.createUser({ phone });
+
+    if (phone) {
+      const data = `${phone}.${otp}.${expires}`;
+      const isValid = otpServices.verifyOtp(hashedOtp, data);
+      if (!isValid) {
+        res.status(400).json({ message: "Invalid OTP" });
+        return;
       }
-    } catch (err) {
-      console.log(err);
-      res.status(500).json({ message: "DB error" });
-      return;
+
+      try {
+        user = await userService.findUser({ phone });
+        if (!user) {
+          user = await userService.createUser({ phone, email: "NA" });
+        }
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "DB error" });
+        return;
+      }
+    }
+    if (email) {
+      const data = `${email}.${otp}.${expires}`;
+      const isValid = otpServices.verifyOtp(hashedOtp, data);
+      if (!isValid) {
+        res.status(400).json({ message: "Invalid OTP" });
+        return;
+      }
+      try {
+        user = await userService.findUser({ email });
+        if (!user) {
+          user = await userService.createUser({ email, phone: "NA" });
+        }
+      } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: "DB error" });
+        return;
+      }
     }
 
     //======================= tokens service =====================
@@ -163,6 +202,7 @@ class AuthController {
       auth: true,
     });
   }
+  // ================ Logout ======================
   async logout(req, res) {
     const { refreshToken } = req.cookies;
 

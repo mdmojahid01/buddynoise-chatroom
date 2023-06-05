@@ -1,0 +1,34 @@
+.ProfilePopup {
+  display: none;
+}
+
+@media (max-width: 650px) {
+  .ProfilePopup {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(0, 0, 0, 0.6);
+    z-index: 5;
+  }
+
+  .ProfilePopupInner {
+    width: calc(100% - 60px);
+    min-height: 300px;
+    background-color: var(--background-secondary);
+    border-radius: 12px;
+    padding: 20px 10px;
+    flex-direction: column;
+  }
+
+  .ProfilePopupInner>img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    border: 4px solid var(--blue);
+  }
+}

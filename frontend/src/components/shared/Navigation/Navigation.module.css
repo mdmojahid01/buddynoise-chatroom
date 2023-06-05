@@ -26,13 +26,24 @@
   align-items: center;
 }
 
+/* -------------------- After login ------------------- */
 .navRight {
   display: flex;
   align-items: center;
   gap: 14px;
 }
 
-.navRight>a>img {
+.profileBtn {
+  background-color: transparent;
+  border: none;
+  transition: all 0.3s;
+}
+
+.profileBtn:hover {
+  transform: scale(1.2);
+}
+
+.profileBtn>img {
   width: 45px;
   height: 45px;
   border-radius: 50%;
@@ -42,7 +53,7 @@
   background-color: var(--blue);
 }
 
-.navRight>button {
+.logoutBtn {
   background-color: transparent;
   color: var(--blue);
   font-size: 36px;
@@ -60,6 +71,65 @@
   text-transform: capitalize;
 }
 
-.navRight>button:hover {
+.logoutBtn:hover {
   transform: scale(1.2);
 }
+
+/*************** Responsive CSS ***************/
+@media (max-width: 1199.98px) {
+  .logo {
+    padding: 20px 40px;
+  }
+}
+
+/* X-Small devices (portrait phones, less than 576px) */
+@media (max-width: 650px) {
+  .logo {
+    height: 90px;
+    padding: 24px 30px;
+  }
+
+  .logo>li>a>img {
+    width: 28px;
+    margin-right: 8px;
+  }
+
+  .logo>li>a {
+    font-size: 22px;
+  }
+
+  /* ----------------- After Login ------------------ */
+  /* .navRight {
+  } */
+
+  .profileBtn:hover {
+    transform: scale(1);
+  }
+
+  .profileBtn>img {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--blue);
+  }
+
+
+  .logoutBtn {
+    display: none;
+  }
+
+  .navRight>h4 {
+    display: none;
+  }
+}
+
+/* Small devices (landscape phones, less than 768px) */
+/* @media (max-width: 767.98px) {} */
+
+/* Medium devices (tablets, less than 992px) */
+/* @media (max-width: 991.98px) {} */
+
+/* Large devices (desktops, less than 1200px) */
+
+
+/* X-Large devices (large desktops, less than 1400px) */
+/* @media (max-width: 1399.98px) {} */

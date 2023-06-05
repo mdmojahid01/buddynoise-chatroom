@@ -31,7 +31,7 @@ function Mobile({ onNext }) {
           },
           t
         );
-        dispatch(setOtp({ phone: data.phone, hash: data.hash }));
+        dispatch(setOtp({ phone: data.phone, hash: data.hash, email: null }));
         onNext();
       } catch (err) {
         toast.error("Failed try again...", t);
@@ -58,13 +58,20 @@ function Mobile({ onNext }) {
         pattern="[0-9]*"
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        disabled
       />
-      <Button path={null} onNext={submitPhoneNumber} text="Next" />
-
-      <p className={`${rStyle.p}`}>
+      {/* submitPhoneNumber */}
+      <Button path={null} onNext={null} text="Next" />
+      <p
+        className={`${rStyle.p}`}
+        style={{ color: "red", fontSize: "20px", fontWeight: "bold" }}
+      >
+        Sorry, Login or Sign Up with mobile currently not working...
+      </p>
+      {/* <p className={`${rStyle.p}`}>
         By entering your number, you're agreeing to our Terms of Service and
         Privacy Policy. Thanks!
-      </p>
+      </p> */}
     </Card>
   );
 }
