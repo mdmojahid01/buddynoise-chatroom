@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
 
+
 export const socketInit = () => {
   const options = {
     "force new connection": true,
@@ -8,5 +9,5 @@ export const socketInit = () => {
     transports: ["websocket"],
   };
 
-  return io("http://localhost:8080", options);
+  return io(process.env.REACT_APP_API_BASEURL, options);
 };

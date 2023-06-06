@@ -8,19 +8,20 @@ const PORT = process.env.PORT || 3000;
 const router = require("./routes");
 const cookieParser = require("cookie-parser");
 const server = require("http").createServer(app);
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 // ==============================================
 const ACTIONS = require("./actions.js");
 const io = require("socket.io")(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: FRONTEND_URL,
     methods: ["GET", "POST"],
   },
 });
 // ====================================
 const corsOption = {
   credentials: true,
-  origin: ["http://localhost:3000"],
+  origin: [FRONTEND_URL],
 };
 // ====================================
 app.use("/storage", express.static("storage"));
