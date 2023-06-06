@@ -11,17 +11,26 @@ const server = require("http").createServer(app);
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 // ==============================================
+const allowList = [FRONTEND_URL];
 const ACTIONS = require("./actions.js");
 const io = require("socket.io")(server, {
   cors: {
-    origin: FRONTEND_URL,
+    origin: allowList,
     methods: ["GET", "POST"],
   },
 });
 // ====================================
 const corsOption = {
   credentials: true,
-  origin: [FRONTEND_URL],
+  origin: function (origin, callback) {
+    // Log and check yourself if the origin actually matches what you've defined in the allowList array
+    console.log(allowList, origin, allowList.indexOf(origin));
+    if (allowList.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
 };
 // ====================================
 app.use("/storage", express.static("storage"));
