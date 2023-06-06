@@ -24,7 +24,7 @@ const corsOption = {
   credentials: true,
   origin: function (origin, callback) {
     // Log and check yourself if the origin actually matches what you've defined in the allowList array
-    console.log(allowList, origin, allowList.indexOf(origin));
+    // console.log(allowList, origin, allowList.indexOf(origin));
     if (allowList.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
