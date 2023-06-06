@@ -190,10 +190,12 @@ class AuthController {
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
+      sameSite: "none",
     });
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       httpOnly: true,
+      sameSite: "none",
     });
     // response
     const userdto = new UserDto(user);
