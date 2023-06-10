@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../app/authSlice";
-import { getRefresh } from "../http";
+import axios from "axios";
 
 export function useLoadingWithRefresh() {
   const [loading, setLoading] = useState(true);
@@ -10,7 +10,12 @@ export function useLoadingWithRefresh() {
   useEffect(() => {
     (async () => {
       try {
-        const response = await getRefresh();
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASEURL}/api/refresh`,
+          {
+            withCredentials: true,
+          }
+        );
         dispatch(setAuth(response.data));
         setLoading(false);
       } catch (err) {

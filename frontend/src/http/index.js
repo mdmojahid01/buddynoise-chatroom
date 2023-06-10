@@ -18,7 +18,6 @@ export const logout = (data) => api.post("/api/logout", data);
 export const createRoom = (data) => api.post("/api/rooms", data);
 export const getAllRooms = () => api.get("/api/rooms");
 export const getRoom = (roomId) => api.get(`/api/rooms/${roomId}`);
-export const getRefresh = () => api.get("/api/refresh");
 
 // =============================================================
 // Interceptors
@@ -35,7 +34,9 @@ api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        await getRefresh();
+        await axios.get(`${process.env.REACT_APP_API_BASEURL}/api/refresh`, {
+          withCredentials: true,
+        });
         return api.request(originalRequest);
       } catch (err) {
         console.log(err);
