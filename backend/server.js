@@ -11,7 +11,7 @@ const server = require("http").createServer(app);
 const FRONTEND_URL = process.env.FRONTEND_URL;
 
 // ==============================================
-const allowList = [FRONTEND_URL];
+const allowList = FRONTEND_URL.split(",");
 const ACTIONS = require("./actions.js");
 const io = require("socket.io")(server, {
   cors: {
